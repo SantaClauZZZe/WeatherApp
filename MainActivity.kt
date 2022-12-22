@@ -70,11 +70,11 @@ class MainActivity : AppCompatActivity() {
         weather.city = this._city
 
         val jsonObj = JSONObject(data)
-        weather.temp = jsonObj.getJSONObject("main").getString("temp") ?: "Error"
-        weather.temp_like_as = jsonObj.getJSONObject("main").getString("feels_like") ?: "Error"
-        weather.wind_speed = jsonObj.getJSONObject("wind").getString("speed") ?: "Error"
-        weather.wind_degrees = jsonObj.getJSONObject("wind").getString("deg") ?: "Error"
-        weather.humidity = jsonObj.getJSONObject("main").getString("humidity") ?: "Error"
+        weather.temp = jsonObj.getJSONObject("main").getString("temp").let{ "$it°" } ?: "Error"
+        weather.temp_like_as = jsonObj.getJSONObject("main").getString("feels_like").let{ "$it°" } ?: "Error"
+        weather.wind_speed = jsonObj.getJSONObject("wind").getString("speed").let{ "$it м/с" } ?: "Error"
+        weather.wind_degrees = jsonObj.getJSONObject("wind").getString("deg").let{ "$it°" } ?: "Error"
+        weather.humidity = jsonObj.getJSONObject("main").getString("humidity").let{ "$it%" } ?: "Error"
         val temp = (jsonObj.getJSONObject("sys").getString("sunset") ?: "0").toLong() -
                 (jsonObj.getJSONObject("sys").getString("sunrise") ?: "0").toLong()
         weather.day_duration = "${(Duration.convert(temp.toDouble(), DurationUnit.SECONDS, DurationUnit.HOURS)).toInt().toString()} ч. : " +
